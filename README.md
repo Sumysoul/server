@@ -136,7 +136,7 @@ npm run build
 ```shell
 ./gradlew build
 ```
-- If configuration files were changed (e.g. [!](./serverless.yml),[!](serverless/functions.yml), [!](serverless/template.yml)), run:
+- If configuration files were changed (e.g. [serverless](./serverless.yml),[functions](serverless/functions.yml),[CF template](serverless/template.yml)), run:
 ```shell
 sls deploy --verbose
 ```
