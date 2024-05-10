@@ -1,0 +1,27 @@
+main:
+  handler: com.jdum.commerce.sumysoul.StreamLambdaHandler
+  events:
+    - http:
+        path: /api/v1/drinks
+        method: get
+    - http:
+        path: /api/v1/food
+        method: get
+    - http:
+        path: /api/login
+        method: post
+    - http:
+        path: /api/v1/food
+        method: post
+    - http:
+        path: /api/v1/drinks
+        method: post
+    - http:
+        path: /api/v1/user
+        method: get
+
+#    - schedule:
+#        enabled: ${param:warmup-enabled}
+#        rate:
+#            every day between 6am-11pm in Kyiv time zone each 14 minutes
+#          - cron(0/14 4-20 * * ? *)

@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "serverless-finch": "^4.0.4"
+  },
+  "devDependencies": {
+    "serverless-domain-manager": "^7.3.8",
+    "serverless-dotenv-plugin": "^6.0.0"
+  }
+}

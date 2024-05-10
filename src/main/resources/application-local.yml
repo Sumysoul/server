@@ -1,0 +1,35 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  devtools:
+    restart:
+      enabled: true
+  application:
+    name: ${APP_NAME}
+  data:
+    mongodb:
+      uri: ${APP_DB_URL}
+      database: ${APP_DB_NAME}
+  jackson:
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 100
+cloud:
+  aws:
+    region:
+      static: ${APP_AWS_REGION}
+    credentials:
+      profile-name: ${APP_AWS_PROFILE}
+application:
+  auth:
+    jwt-secret: ${APP_AUTH_JWT_SECRET}
+    jwt-expiration-ms: ${APP_AUTH_JWT_TTL}
+  s3:
+    menu-bucket: ${AWS_MENU_BUCKET}-${APP_STAGE}
+    drinks-file: ${AWS_MENU_DRINKS_FILE}
+    food-file: ${AWS_MENU_FOOD_FILE}
+logging:
+  level:
+    root: error
+    com.jdum.commerce.sumysoul: debug

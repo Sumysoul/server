@@ -1,0 +1,66 @@
+service: ${env:APP_NAME}
+frameworkVersion: '3'
+
+configValidationMode: off
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: java21
+  region: ${env:APP_AWS_REGION}
+  profile: ${env:APP_AWS_PROFILE}
+  stage: qa
+  memorySize: 512
+  timeout: 10
+  versionFunctions: false
+  tags:
+    stage: ${sls:stage}
+    app: ${env:APP_NAME}
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:ListObjectsV2
+            - s3:PutObject
+            - s3:GetObject
+          Resource:
+            - arn:aws:s3:::${env:AWS_MENU_BUCKET}-${sls:stage}
+            - arn:aws:s3:::${env:AWS_MENU_BUCKET}-${sls:stage}/*
+
+  environment:
+    APP_STAGE: ${env:APP_STAGE}
+    APP_NAME: ${env:APP_NAME}
+    APP_DB_URL: ${env:APP_DB_URL}
+    APP_DB_NAME: ${env:APP_DB_NAME}
+    APP_AUTH_JWT_SECRET: ${env:APP_AUTH_JWT_SECRET}
+    APP_AUTH_JWT_TTL: ${env:APP_AUTH_JWT_TTL}
+    AWS_MENU_BUCKET: ${env:AWS_MENU_BUCKET}
+    AWS_MENU_DRINKS_FILE: ${env:AWS_MENU_DRINKS_FILE}
+    AWS_MENU_FOOD_FILE: ${env:AWS_MENU_FOOD_FILE}
+    APP_INIT_USER_LOGIN: ${env:APP_INIT_USER_LOGIN}
+    APP_INIT_USER_PASSWORD: ${env:APP_INIT_USER_PASSWORD}
+
+package:
+  artifact: ${env:AWS_SLS_BACK_END_ARTIFACT_NAME}
+
+functions: ${file(serverless/functions.yml)}
+resources: ${file(serverless/template.yml)}
+
+plugins:
+  - serverless-finch
+  - serverless-domain-manager
+  - serverless-dotenv-plugin
+
+custom:
+  customDomain:
+    domainName: ${env:AWS_SLS_BACK_END_DOMAIN_NAME}
+    basePath: ''
+    stage: ${sls:stage}
+    createRoute53Record: true
+  client:
+    bucketName: ${env:AWS_MENU_BUCKET}-website-${sls:stage}
+    tags:
+      stage: ${sls:stage}
+      app: ${env:APP_NAME}

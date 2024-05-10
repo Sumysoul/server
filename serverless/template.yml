@@ -1,0 +1,96 @@
+Resources:
+# S3 bucket with images and menu json
+  MenuS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${env:AWS_MENU_BUCKET}-${sls:stage}
+      CorsConfiguration:
+#        needs CORS for reading menu json's from another origin
+        CorsRules:
+          - AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - "GET"
+              - "HEAD"
+            MaxAge: 0
+      OwnershipControls:
+        Rules:
+          -  ObjectOwnership: ObjectWriter
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+#  S3 bucket policy for reading menu json
+  MenuS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MenuS3Bucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Sub 'arn:aws:s3:::${env:AWS_MENU_BUCKET}-${sls:stage}/*'
+
+#    if certificate was not created, we can create it here
+#    MyCertificate:
+#    Type: AWS::CertificateManager::Certificate
+#    Properties:
+#      DomainName: ${env:AWS_SLS_ACM_CERTIFICATE_NAME}
+#      ValidationMethod: DNS
+
+#  CDN for static website
+  WebAppCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: ${self:custom.client.bucketName}.s3-website.${self:provider.region}.amazonaws.com
+            Id: ${env:AWS_MENU_BUCKET}-website-${sls:stage}-id
+            CustomOriginConfig:
+              HTTPPort: 80
+              OriginProtocolPolicy: http-only
+        Enabled: 'true'
+        Aliases:
+          - ${env:AWS_SLS_FRONTEND_DOMAIN_NAME}
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - DELETE
+            - GET
+            - HEAD
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+          TargetOriginId: ${env:AWS_MENU_BUCKET}-website-${sls:stage}-id
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        ViewerCertificate:
+#          uncomment only if you do not use aliases
+#          CloudFrontDefaultCertificate: 'true'
+
+          AcmCertificateArn: ${env:AWS_SLS_ACM_CERTIFICATE_ARN}
+#          AcmCertificateArn: !Ref MyCertificate
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
+
+#  DNS record for static website
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: ${env:AWS_SLS_HOSTED_ZONE_NAME}
+      AliasTarget:
+        HostedZoneId: ${env:AWS_SLS_HOSTED_ZONE_ID}
+        DNSName: !GetAtt WebAppCloudFrontDistribution.DomainName
+      Name: ${env:AWS_SLS_FRONTEND_DOMAIN_NAME}
+      Type: A
+
