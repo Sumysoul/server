@@ -15,9 +15,11 @@
 
 # Serverless directories
 .serverless
-client
+client/*
+
 node_modules
 .idea
 assets
 
 !/gradle/wrapper/gradle-wrapper.jar
+!client/.gitkeep

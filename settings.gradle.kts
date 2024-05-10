@@ -1,1 +1,1 @@
-rootProject.name = "sumysoul"
+rootProject.name = "sumysoul-server"
