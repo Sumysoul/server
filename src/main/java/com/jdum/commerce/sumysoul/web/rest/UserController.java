@@ -2,6 +2,7 @@ package com.jdum.commerce.sumysoul.web.rest;
 
 import com.jdum.commerce.sumysoul.dto.UserDto;
 import com.jdum.commerce.sumysoul.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +39,7 @@ public class UserController {
   }
 
   @PostMapping
-  public UserDto createUser(@RequestBody UserDto user) {
+  public UserDto createUser(@Valid @RequestBody UserDto user) {
     return userService.create(user);
   }
 

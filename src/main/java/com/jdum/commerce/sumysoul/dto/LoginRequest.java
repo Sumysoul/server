@@ -1,7 +1,12 @@
 package com.jdum.commerce.sumysoul.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public record LoginRequest(
-    String login, String password
+    @NotEmpty(message = "Should not be empty")
+    String login,
+    @NotEmpty(message = "Should not be empty")
+    String password
 ){
 
 }
