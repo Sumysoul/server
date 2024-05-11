@@ -13,6 +13,7 @@ provider:
   memorySize: 512
   timeout: 10
   versionFunctions: false
+  logRetentionInDays: 7
   tags:
     stage: ${sls:stage}
     app: ${env:APP_NAME}
