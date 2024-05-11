@@ -19,37 +19,38 @@ Serverless based back-end that set's up AWS infrastructure and serves restaurant
 - Request certificate (only in `us-east-1` region) with name `example.com` and setup 2 domains: `*.example.com`, `example.com`
 - Add certificate CNAME to domain (during DNS validation)
 - Create `.env` file with required environment variables:
+
 ```dotenv
 #super user credentials
-APP_INIT_USER_LOGIN=<super user login>
-APP_INIT_USER_PASSWORD=<super user password>
+APP_INIT_USER_LOGIN='<super user login>'
+APP_INIT_USER_PASSWORD='<super user password>'
 
 #app
-APP_NAME=<your application name>
-APP_STAGE=<your environment>
-APP_AUTH_JWT_SECRET=<secret that will be used to JWT token encryption and decryption>
-APP_AUTH_JWT_TTL=<JWT TTL>
+APP_NAME='<your application name>'
+APP_STAGE='<your environment>'
+APP_AUTH_JWT_SECRET='<secret that will be used to JWT token encryption and decryption>'
+APP_AUTH_JWT_TTL='<JWT TTL>'
 
 #db
-APP_DB_URL=<Menu DB url>
-APP_DB_NAME=<Menu DB name>
+APP_DB_URL='<Menu DB url>'
+APP_DB_NAME='<Menu DB name>'
 
 #aws
-APP_AWS_REGION=<AWS region>
-APP_AWS_PROFILE=<AWS credentials profile>
+APP_AWS_REGION='<AWS region>'
+APP_AWS_PROFILE='<AWS credentials profile>'
 
-AWS_MENU_BUCKET=<Menu bucket name for assets>
-AWS_MENU_DRINKS_FILE=<Drinks file name>
-AWS_MENU_FOOD_FILE=<Food file name>
+AWS_MENU_BUCKET='<Menu bucket name for assets>'
+AWS_MENU_DRINKS_FILE='<Drinks file name>'
+AWS_MENU_FOOD_FILE='<Food file name>'
 
 #sls specific
-AWS_SLS_ACM_CERTIFICATE_ARN=<Certificate created after domain registration>
-AWS_SLS_ACM_CERTIFICATE_NAME=<Certificate name, e.g example.com>
-AWS_SLS_HOSTED_ZONE_NAME=<Hosted Zone Name for registered domain>
-AWS_SLS_HOSTED_ZONE_ID=<Hosted Zone Id for website CDN>
-AWS_SLS_FRONTEND_DOMAIN_NAME=<Entrypoint DNS for website>
-AWS_SLS_BACK_END_DOMAIN_NAME=<Entrypoint DNS for backend>
-AWS_SLS_BACK_END_ARTIFACT_NAME=<Backend artifact name (including path, e.g. build/distributions/my-service-0.0.1-SNAPSHOT.zip))>
+AWS_SLS_ACM_CERTIFICATE_ARN='<Certificate created after domain registration>'
+AWS_SLS_ACM_CERTIFICATE_NAME='<Certificate name, e.g example.com>'
+AWS_SLS_HOSTED_ZONE_NAME='<Hosted Zone Name for registered domain>'
+AWS_SLS_HOSTED_ZONE_ID='<Hosted Zone Id for website CDN>'
+AWS_SLS_FRONTEND_DOMAIN_NAME='<Entrypoint DNS for website>'
+AWS_SLS_BACK_END_DOMAIN_NAME='<Entrypoint DNS for backend>'
+AWS_SLS_BACK_END_ARTIFACT_NAME='<Backend artifact name (including path, e.g. build/distributions/my-service-0.0.1-SNAPSHOT.zip))>'
 ```
 
 ### Run scrips
