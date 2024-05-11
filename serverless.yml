@@ -14,6 +14,8 @@ provider:
   timeout: 10
   versionFunctions: false
   logRetentionInDays: 7
+  stackTags:
+    stackTagKey: stackTagValue
   tags:
     stage: ${sls:stage}
     app: ${env:APP_NAME}
@@ -60,6 +62,7 @@ custom:
     basePath: ''
     stage: ${sls:stage}
     createRoute53Record: true
+    certificateName: ${env:AWS_SLS_ACM_CERTIFICATE_NAME}
   client:
     bucketName: ${env:AWS_MENU_BUCKET}-website-${sls:stage}
     tags:

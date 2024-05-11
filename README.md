@@ -104,7 +104,7 @@ curl --location 'api.example.com/api/v1/food' \
 ```shell
 sls client remove --no-confirm
 ```
-- Delete DNS record set for backend (ignore the error in response):
+- Delete DNS record set for backend:
 ```shell
 sls delete_domain
 ```
@@ -126,7 +126,9 @@ npm run build
 ```
 - Copy `out/*` directory files to `client/dist` folder
 - Upload static website content: 
-- Run `sls client deploy --no-confirm`
+```shell
+sls client deploy --no-confirm
+```
 - Go to AWS CloudFront, invalidate cache for path `/*`
 
 ### Back-end
