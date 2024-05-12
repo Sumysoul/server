@@ -6,12 +6,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdum.commerce.sumysoul.domain.Element;
 import com.jdum.commerce.sumysoul.utils.MenuHelper;
-import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -31,11 +29,6 @@ public class ImageService {
 
   @Value("${application.s3.menu-bucket}")
   private String menuBucket;
-
-  @PostConstruct
-  public void init() {
-    log.info("application.s3.menu-bucket: {}", menuBucket);
-  }
 
   public void uploadFile(String fileName, Object content) {
     log.info("Update content for file: {} started", fileName);

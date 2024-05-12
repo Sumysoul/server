@@ -67,7 +67,6 @@ sls create_domain
 ```shell
 sls deploy --verbose
 ```
-- Upload images to menu bucket
 - In frontend application build static website: 
 ```shell
 npm run build
@@ -77,7 +76,7 @@ npm run build
 ```shell
 sls client deploy --no-confirm
 ```
-- Pre-initialize menu json: add menu for food and drinks by running cURL: 
+- (optional) Update menu json if menus in assets/menus bucket are outdated:
 
 ```shell
 curl --location 'api.example.com/api/login' \
@@ -85,6 +84,15 @@ curl --location 'api.example.com/api/login' \
 --data '{
     "login": "",
     "password": ""
+}'
+```
+
+```shell
+curl --location 'api.example.com/api/v1/drinks' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <>token' \
+--data '{
+<prepared data>
 }'
 ```
 
@@ -110,7 +118,6 @@ sls client remove --no-confirm
 sls delete_domain
 ```
 - Remove record set from AWS (2 record started from `api.`)
-- Empty S3 menu bucket
 - Delete CloudFormation stack:
 ```shell
 sls remove --verbose
@@ -141,7 +148,7 @@ sls client deploy --no-confirm
 ```
 - If configuration files were changed (e.g. [serverless](./serverless.yml),[functions](serverless/functions.yml),[CF template](serverless/template.yml)), run:
 ```shell
-sls deploy --verbose
+sls deploy --nos3sync --verbose
 ```
 - If configuration files were not changed, run:
 ```shell

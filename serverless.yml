@@ -55,6 +55,7 @@ plugins:
   - serverless-finch
   - serverless-domain-manager
   - serverless-dotenv-plugin
+  - serverless-s3-sync
 
 custom:
   customDomain:
@@ -68,3 +69,7 @@ custom:
     tags:
       stage: ${sls:stage}
       app: ${env:APP_NAME}
+  s3Sync:
+    - bucketName: ${env:AWS_MENU_BUCKET}-${sls:stage}
+      localDir: assets
+      deleteRemoved: false
