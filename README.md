@@ -160,7 +160,7 @@ sls deploy -f main --verbose
 - Add code changes
 - Run:
 ```shell
-./gradlew run --spring.profiles.active=local
+./gradlew bootRun -Pargs="--spring.profiles.active=local"
 ```
 
 ## Additional Resources
