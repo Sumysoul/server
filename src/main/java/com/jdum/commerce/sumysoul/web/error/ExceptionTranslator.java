@@ -3,6 +3,7 @@ package com.jdum.commerce.sumysoul.web.error;
 import com.jdum.commerce.sumysoul.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +56,15 @@ public class ExceptionTranslator {
     return ErrorResponse.builder()
         .title(e.getLocalizedMessage())
         .status(HttpStatus.BAD_REQUEST.value())
+        .build();
+  }
+
+  @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ErrorResponse handleValidationError(AuthenticationException e) {
+    return ErrorResponse.builder()
+        .title(e.getLocalizedMessage())
+        .status(HttpStatus.UNAUTHORIZED.value())
         .build();
   }
 }

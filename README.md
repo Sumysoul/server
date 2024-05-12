@@ -123,7 +123,7 @@ sls delete_domain
 sls remove --verbose
 ```
 
-## Development
+## Development and Deployment
 
 ### Front-end
 
@@ -153,6 +153,14 @@ sls deploy --nos3sync --verbose
 - If configuration files were not changed, run:
 ```shell
 sls deploy -f main --verbose
+```
+
+## Local Development
+
+- Add code changes
+- Run:
+```shell
+./gradlew run --spring.profiles.active=local
 ```
 
 ## Additional Resources
