@@ -24,6 +24,7 @@ val lombokVersion: String by project
 val lombokBindingVersion: String by project
 val springCloudVersion: String by project
 val junitVintageVersion: String by project
+val jacocoPluginVersion: String by project
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -81,7 +82,7 @@ tasks.withType<Test> {
 }
 
 jacoco {
-    toolVersion = "0.8.12"
+    toolVersion = jacocoPluginVersion
     reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
 }
 
