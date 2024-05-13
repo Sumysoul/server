@@ -14,8 +14,6 @@ provider:
   timeout: 10
   versionFunctions: false
   logRetentionInDays: 7
-  stackTags:
-    stackTagKey: stackTagValue
   tags:
     stage: ${sls:stage}
     app: ${env:APP_NAME}
