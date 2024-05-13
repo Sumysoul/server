@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StreamLambdaHandler implements RequestStreamHandler {
 
-  private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler
+  private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
 
   static {
     try {
