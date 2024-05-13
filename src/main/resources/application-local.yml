@@ -12,9 +12,6 @@ spring:
       database: ${APP_DB_NAME}
   jackson:
     default-property-inclusion: non_null
-  servlet:
-    multipart:
-      max-file-size: 100
 cloud:
   aws:
     region:

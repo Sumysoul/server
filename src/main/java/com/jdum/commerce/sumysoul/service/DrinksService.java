@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -36,11 +35,5 @@ public class DrinksService {
     imageService.updateImages(elements);
     imageService.uploadFile(menuFile, menu);
     return repository.save(menu);
-  }
-
-  public Drinks uploadImages(List<MultipartFile> files) {
-    imageService.uploadFiles(files);
-    var menu = get();
-    return add(menu);
   }
 }

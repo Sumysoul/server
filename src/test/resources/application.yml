@@ -1,0 +1,29 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: test-app
+  data:
+    mongodb:
+      uri: localhost
+      database: test-db
+  jackson:
+    default-property-inclusion: non_null
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    credentials:
+      profile-name: test-profile
+application:
+  auth:
+    jwt-secret: test-secret
+    jwt-expiration-ms: 1800000
+  s3:
+    menu-bucket: test-bucket-dev
+    drinks-file: /drinks.json
+    food-file: /food.json
+logging:
+  level:
+    root: error
+    com.jdum.commerce.sumysoul: debug

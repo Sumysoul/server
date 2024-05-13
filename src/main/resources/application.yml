@@ -9,9 +9,6 @@ spring:
       database: ${APP_DB_NAME}
   jackson:
     default-property-inclusion: non_null
-  servlet:
-    multipart:
-      max-file-size: 100
 application:
   auth:
     jwt-secret: ${APP_AUTH_JWT_SECRET}

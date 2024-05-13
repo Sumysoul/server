@@ -1,5 +1,6 @@
 plugins {
     java
+    jacoco
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 }
@@ -22,6 +23,7 @@ val mapstructVersion: String by project
 val lombokVersion: String by project
 val lombokBindingVersion: String by project
 val springCloudVersion: String by project
+val junitVintageVersion: String by project
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -34,6 +36,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     implementation("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    implementation("org.projectlombok:lombok:$lombokVersion")
 
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 
@@ -41,8 +44,13 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:$lombokBindingVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.junit.vintage:junit-vintage-engine:$junitVintageVersion")
+
 }
 
 dependencyManagement {
@@ -67,3 +75,54 @@ tasks.register("buildZip", Zip::class) {
 tasks.named("build") {
     dependsOn("buildZip")
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it) {
+            exclude("**/ServerlessApplication.class")
+            exclude("**/StreamLambdaHandler.class")
+            exclude("**/dto/**")
+            exclude("**/domain/**")
+            exclude("**/*Exception.class")
+            exclude("**/configuration/**")
+        }
+    }))
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.05".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestCoverageVerification)
+}
+
+

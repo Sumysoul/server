@@ -3,9 +3,6 @@ package com.jdum.commerce.sumysoul.service;
 import static java.util.Optional.ofNullable;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdum.commerce.sumysoul.domain.Element;
@@ -13,12 +10,10 @@ import com.jdum.commerce.sumysoul.utils.MenuHelper;
 import com.jdum.commerce.sumysoul.web.error.ApplicationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -57,22 +52,5 @@ public class ImageService {
               log.info("Set image url: {}, element: {}", url, element.getName());
               element.setImageUrl(url);
             }));
-  }
-
-  @SneakyThrows
-  public void uploadFile(MultipartFile file) {
-    var metadata = new ObjectMetadata();
-    metadata.setContentType("text/plain");
-    metadata.setContentLength(file.getSize());
-    s3.putObject(new PutObjectRequest(
-        menuBucket,
-        file.getOriginalFilename(),
-        file.getInputStream(),
-        metadata).withCannedAcl(CannedAccessControlList.PublicRead)
-    );
-  }
-
-  public void uploadFiles(List<MultipartFile> files) {
-    files.forEach(this::uploadFile);
   }
 }
