@@ -1,0 +1,44 @@
+@startuml
+
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam activatColor Green
+skinparam sequence {
+    LifeLineBackgroundColor Gold
+}
+
+title Add Menu Flow
+autonumber
+
+participant Client as client
+participant "AWS Console" as aws
+participant Lambda as lambda
+participant "S3 assets" as s3
+participant "Data Base" as db
+
+activate client
+
+client -> aws++: upload images
+aws --> client--: ok
+
+client -> lambda++: POST /api/login
+lambda --> client--: JWT token
+
+client -> lambda++: POST /api/v1/drinks or /api/v1/food
+
+lambda -> lambda: update subIds
+lambda -> lambda: find non-url images
+
+lambda -> s3++: get image urls by name
+s3 --> lambda--: image urls
+
+lambda -> s3++: save drinks.json or food.json
+s3 --> lambda--: ok
+
+lambda -> db++: update menu
+db --> lambda--: ok
+
+lambda --> client--: ok
+
+deactivate client
+@enduml
