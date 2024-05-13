@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdum.commerce.sumysoul.domain.Element;
 import com.jdum.commerce.sumysoul.utils.MenuHelper;
+import com.jdum.commerce.sumysoul.web.error.ApplicationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -41,8 +42,9 @@ public class ImageService {
     try {
       return mapper.writeValueAsString(object);
     } catch (JsonProcessingException e) {
-      log.error("Unable to convert content to string");
-      throw new RuntimeException(e);
+      var message = "Unable to convert content to string";
+      log.error(message);
+      throw new ApplicationException(message, e);
     }
   }
 

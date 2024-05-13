@@ -52,6 +52,6 @@ public class ServerlessApplication extends SpringBootServletInitializer {
 
   @Bean
   public ApplicationRunner applicationRunner() {
-    return (args) -> userService.initDB();
+    return args -> userService.initDB();
   }
 }

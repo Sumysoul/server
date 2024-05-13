@@ -1,6 +1,6 @@
 package com.jdum.commerce.sumysoul.service;
 
-import com.jdum.commerce.sumysoul.configuration.Authority;
+import com.jdum.commerce.sumysoul.domain.Authority;
 import com.jdum.commerce.sumysoul.configuration.mapper.UserMapper;
 import com.jdum.commerce.sumysoul.domain.User;
 import com.jdum.commerce.sumysoul.dto.UserDto;
@@ -45,11 +45,11 @@ public class UserService implements UserDetailsService {
         .orElseThrow(
             () -> new UnauthorizedException(String.format("User %s not found", username)));
 
-    List<GrantedAuthority> authorities = user.getAuthorities()
+    List<SimpleGrantedAuthority> authorities = user.getAuthorities()
         .stream()
         .map(Enum::name)
         .map(SimpleGrantedAuthority::new)
-        .collect(Collectors.toList());
+        .toList();
 
     return new org.springframework.security.core.userdetails.User(user.getLogin(),
         user.getPassword(), authorities);

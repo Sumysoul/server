@@ -20,11 +20,4 @@ public class WebConfiguration {
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
-
-//  @Bean(name = {"multipartResolver"})
-//  public multipartResolver() {
-//    var multipartResolver = new CommonsMultipartResolver();
-//    multipartResolver.setMaxUploadSize(100000)
-//    return CommonsMultipartResolver()
-//  }
 }

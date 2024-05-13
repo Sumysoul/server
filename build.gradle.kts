@@ -15,37 +15,45 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
-extra["springCloudVersion"] = "2023.0.1"
+val awsSpringServerlessVersion: String by project
+val awsSpringCloudVersion: String by project
+val jjwtVersion: String by project
+val mapstructVersion: String by project
+val lombokVersion: String by project
+val lombokBindingVersion: String by project
+val springCloudVersion: String by project
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:2.0.0")
+    implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:$awsSpringServerlessVersion")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-
-    implementation("org.mapstruct:mapstruct:1.5.5.Final")
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
-    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
-
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:$awsSpringCloudVersion")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("io.jsonwebtoken:jjwt-api:0.12.5")
-    implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
+
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:$lombokBindingVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
 
 tasks.register("buildZip", Zip::class) {
+    description = "Builds zip file for serverless deployment"
+    group = JavaBasePlugin.BUILD_TASK_NAME
     archiveBaseName.set("sumysoul")
     from(tasks.named("compileJava"))
     from(tasks.named("processResources"))

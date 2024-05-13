@@ -1,6 +1,5 @@
 package com.jdum.commerce.sumysoul.domain;
 
-import com.jdum.commerce.sumysoul.configuration.Authority;
 import java.util.EnumSet;
 import lombok.Builder;
 import lombok.Data;

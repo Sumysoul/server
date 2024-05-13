@@ -3,7 +3,6 @@ package com.jdum.commerce.sumysoul.utils;
 import static java.util.Optional.ofNullable;
 
 import com.jdum.commerce.sumysoul.domain.Element;
-import com.jdum.commerce.sumysoul.domain.Ingredient;
 import com.jdum.commerce.sumysoul.domain.Item;
 import com.jdum.commerce.sumysoul.domain.Menu;
 import com.jdum.commerce.sumysoul.domain.MenuGroup;

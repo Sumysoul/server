@@ -1,7 +1,7 @@
 package com.jdum.commerce.sumysoul.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.jdum.commerce.sumysoul.configuration.Authority;
+import com.jdum.commerce.sumysoul.domain.Authority;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.EnumSet;

@@ -34,6 +34,7 @@ public class WebSecurityConfig {
   public JwtAuthenticationFilter authFilter() {
     return new JwtAuthenticationFilter(jwtHelper, userDetailsService);
   }
+
   @Bean
   public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -47,9 +48,9 @@ public class WebSecurityConfig {
         })
         .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-    http.addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.authenticationProvider(authenticationProvider());
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class)
+        .authenticationProvider(authenticationProvider());
     return http.build();
   }
 
@@ -63,7 +64,8 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)
+      throws Exception {
     return authConfig.getAuthenticationManager();
   }
 
