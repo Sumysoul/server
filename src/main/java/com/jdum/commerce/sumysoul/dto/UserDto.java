@@ -22,5 +22,8 @@ public class UserDto {
   @NotEmpty(message = "Should not be empty")
   private String password;
 
+  private String firstName;
+  private String lastName;
+
   private EnumSet<Authority> authorities;
 }
