@@ -1,4 +1,5 @@
 # Menu Browsing And Management System
+[![Java CI with Gradle](https://github.com/Sumysoul/server/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/Sumysoul/server/actions/workflows/gradle.yml)
 
 Serverless based back-end that set's up AWS infrastructure and serves restaurant menu content
 
