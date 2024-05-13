@@ -2,6 +2,10 @@
 
 Serverless based back-end that set's up AWS infrastructure and serves restaurant menu content
 
+## Architecture
+
+![](./docs/architecture.png)
+
 ## Prerequisites
 
 - [Nodejs](https://nodejs.org/en/download)
