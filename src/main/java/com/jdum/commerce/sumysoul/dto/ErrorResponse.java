@@ -11,5 +11,5 @@ import lombok.Data;
 public class ErrorResponse implements Serializable {
   private String title;
   private int status;
-  private String details;
+  private Object details;
 }

@@ -5,10 +5,12 @@ import com.jdum.commerce.sumysoul.domain.Authority;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.EnumSet;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Builder
 public class UserDto {
   private String id;
 

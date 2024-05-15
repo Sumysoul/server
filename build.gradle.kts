@@ -25,6 +25,7 @@ val lombokBindingVersion: String by project
 val springCloudVersion: String by project
 val junitVintageVersion: String by project
 val jacocoPluginVersion: String by project
+val testCoverageThreshold: String by project
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -108,6 +109,7 @@ tasks.jacocoTestReport {
             exclude("**/domain/**")
             exclude("**/*Exception.class")
             exclude("**/configuration/**")
+            exclude("**/repository/**")
         }
     }))
 }
@@ -116,10 +118,21 @@ tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = "0.05".toBigDecimal()
+                minimum = testCoverageThreshold.toBigDecimal()
             }
         }
     }
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it) {
+            exclude("**/ServerlessApplication.class")
+            exclude("**/StreamLambdaHandler.class")
+            exclude("**/dto/**")
+            exclude("**/domain/**")
+            exclude("**/*Exception.class")
+            exclude("**/configuration/**")
+            exclude("**/repository/**")
+        }
+    }))
 }
 
 tasks.check {

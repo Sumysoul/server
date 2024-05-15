@@ -7,24 +7,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdum.commerce.sumysoul.domain.Food;
 import com.jdum.commerce.sumysoul.service.FoodService;
+import com.jdum.commerce.sumysoul.service.UserService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@SpringBootTest(classes = {
-    FoodController.class,
-    FoodService.class,
-    ObjectMapper.class
-})
-@AutoConfigureMockMvc(addFilters = false)
-@EnableWebMvc
+@WebMvcTest(
+    controllers = FoodController.class,
+    excludeAutoConfiguration = SecurityAutoConfiguration.class
+)
 class FoodControllerTest {
 
   @Autowired
@@ -32,6 +29,9 @@ class FoodControllerTest {
 
   @MockBean
   private FoodService foodService;
+
+  @MockBean
+  private UserService userService;
 
   @Autowired
   private ObjectMapper mapper;
