@@ -1,5 +1,6 @@
 package com.jdum.commerce.sumysoul.web.error;
 
+import com.jdum.commerce.sumysoul.dto.ErrorDetails;
 import com.jdum.commerce.sumysoul.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -33,11 +34,11 @@ public class ExceptionTranslator {
   }
 
   @ExceptionHandler(UserExistsException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ResponseStatus(HttpStatus.CONFLICT)
   public ErrorResponse handleUserNotFoundError(UserExistsException e) {
     return ErrorResponse.builder()
         .title(e.getLocalizedMessage())
-        .status(HttpStatus.BAD_REQUEST.value())
+        .status(HttpStatus.CONFLICT.value())
         .build();
   }
 
@@ -53,9 +54,14 @@ public class ExceptionTranslator {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleValidationError(MethodArgumentNotValidException e) {
+    var fieldErrors = e.getBindingResult().getFieldErrors().stream()
+        .map(f -> new ErrorDetails(f.getField(),f.getDefaultMessage()))
+        .toList();
+
     return ErrorResponse.builder()
-        .title(e.getLocalizedMessage())
+        .title("Method argument not valid")
         .status(HttpStatus.BAD_REQUEST.value())
+        .details(fieldErrors)
         .build();
   }
 
