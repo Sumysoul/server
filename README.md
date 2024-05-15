@@ -59,6 +59,12 @@ AWS_SLS_BACK_END_ARTIFACT_NAME='<Backend artifact name (including path, e.g. bui
 
 ### Run scrips
 
+- Install dependencies:
+
+```shell
+npm install
+```
+
 - Create DNS record set:
 ```shell
 sls create_domain
