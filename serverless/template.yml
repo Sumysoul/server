@@ -20,6 +20,11 @@ Resources:
           -  ObjectOwnership: ObjectWriter
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
+      Tags:
+        - Key: Name
+          Value: ${env:APP_NAME}
+        - Key: STAGE
+          Value: ${sls:stage}
 #  S3 bucket policy for reading menu json
   MenuS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -32,13 +37,6 @@ Resources:
             Principal: '*'
             Action: s3:GetObject
             Resource: !Sub 'arn:aws:s3:::${env:AWS_MENU_BUCKET}-${sls:stage}/*'
-
-#    if certificate was not created, we can create it here
-#    MyCertificate:
-#    Type: AWS::CertificateManager::Certificate
-#    Properties:
-#      DomainName: ${env:AWS_SLS_ACM_CERTIFICATE_NAME}
-#      ValidationMethod: DNS
 
 #  CDN for static website
   WebAppCloudFrontDistribution:
@@ -75,13 +73,14 @@ Resources:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
         ViewerCertificate:
-#          uncomment only if you do not use aliases
-#          CloudFrontDefaultCertificate: 'true'
-
           AcmCertificateArn: ${env:AWS_SLS_ACM_CERTIFICATE_ARN}
-#          AcmCertificateArn: !Ref MyCertificate
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
+      Tags:
+        - Key: Name
+          Value: ${env:APP_NAME}
+        - Key: STAGE
+          Value: ${sls:stage}
 
 #  DNS record for static website
   DnsRecord:

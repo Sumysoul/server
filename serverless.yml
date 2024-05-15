@@ -15,11 +15,20 @@ provider:
   versionFunctions: false
   logRetentionInDays: 7
   tags:
-    stage: ${sls:stage}
-    app: ${env:APP_NAME}
-
+    STAGE: ${sls:stage}
+    Name: ${env:APP_NAME}
+  stackTags:
+    STAGE: ${sls:stage}
+    Name: ${env:APP_NAME}
+  deploymentBucket:
+    tags:
+      STAGE: ${sls:stage}
+      Name: ${env:APP_NAME}
   iam:
     role:
+      tags:
+        STAGE: ${sls:stage}
+        Name: ${env:APP_NAME}
       statements:
         - Effect: Allow
           Action:
@@ -65,8 +74,8 @@ custom:
   client:
     bucketName: ${env:AWS_MENU_BUCKET}-website-${sls:stage}
     tags:
-      stage: ${sls:stage}
-      app: ${env:APP_NAME}
+      STAGE: ${sls:stage}
+      Name: ${env:APP_NAME}
   s3Sync:
     - bucketName: ${env:AWS_MENU_BUCKET}-${sls:stage}
       localDir: assets
