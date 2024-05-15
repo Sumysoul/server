@@ -80,7 +80,7 @@ npm run build
 ```shell
 sls client deploy --no-confirm
 ```
-- (optional) Update menu json if menus in assets/menus bucket are outdated:
+- Update menus in assets/menus bucket:
 
 ```shell
 curl --location 'api.example.com/api/login' \

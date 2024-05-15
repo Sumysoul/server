@@ -9,7 +9,7 @@ provider:
   runtime: java21
   region: ${env:APP_AWS_REGION}
   profile: ${env:APP_AWS_PROFILE}
-  stage: qa
+  stage: prod
   memorySize: 512
   timeout: 10
   versionFunctions: false
