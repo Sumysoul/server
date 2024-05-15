@@ -179,3 +179,7 @@ sls deploy -f main --verbose
 - [Caching in with CloudFront using Serverless](https://medium.com/yld-blog/caching-in-with-cloudfront-using-serverless-5a174651ab14)
 - [aws-node-single-page-app-via-cloudfront](https://github.com/serverless/examples/blob/master/aws-node-single-page-app-via-cloudfront/serverless.yml)
 - Download assets from s3: `aws s3 sync s3://<bucket-name> ./assets/images --profile <profile>`
+
+## Contributors
+
+- **[Igor Dumchykov](https://github.com/igordumchykov)**
