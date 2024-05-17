@@ -39,11 +39,13 @@ class ImageServiceTest {
   private ImageService imageService;
 
   private final String menuBucket = "test-bucket";
+  private final String menuBucketPath = "images";
 
   @BeforeEach
   void setUp() {
     imageService = new ImageService(s3, mapper);
     ReflectionTestUtils.setField(imageService, "menuBucket", menuBucket);
+    ReflectionTestUtils.setField(imageService, "menuBucketPath", menuBucketPath);
   }
 
   @Test
@@ -85,12 +87,11 @@ class ImageServiceTest {
     content.setImageUrl("imageName=image.png");
 
     List<Element> elements = List.of(content);
-
     try {
-      when(s3.getUrl(menuBucket, "imageName=image.png")).thenReturn(
-          URI.create("https://example.com/imageName=image.png").toURL());
+      when(s3.getUrl("%s/%s".formatted(menuBucket, menuBucketPath), "imageName=image.png")).thenReturn(
+          URI.create("https://example.com/images/imageName=image.png").toURL());
       assertDoesNotThrow(() -> imageService.updateImages(elements));
-      assertEquals("https://example.com/imageName=image.png", content.getImageUrl());
+      assertEquals("https://example.com/images/imageName=image.png", content.getImageUrl());
     } catch (Exception e) {
       fail("URL creation failed");
     }

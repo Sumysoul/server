@@ -24,6 +24,7 @@ application:
     jwt-expiration-ms: ${APP_AUTH_JWT_TTL}
   s3:
     menu-bucket: ${AWS_MENU_BUCKET}-${APP_STAGE}
+    menu-bucket-path: ${AWS_MENU_BUCKET_PATH}
     drinks-file: ${AWS_MENU_DRINKS_FILE}
     food-file: ${AWS_MENU_FOOD_FILE}
 logging:

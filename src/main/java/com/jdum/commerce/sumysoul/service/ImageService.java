@@ -26,6 +26,9 @@ public class ImageService {
   @Value("${application.s3.menu-bucket}")
   private String menuBucket;
 
+  @Value("${application.s3.menu-bucket-path}")
+  private String menuBucketPath;
+
   public void uploadFile(String fileName, Object content) {
     log.info("Update content for file: {} started", fileName);
     String json = convert(content);
@@ -47,7 +50,9 @@ public class ImageService {
     elements.stream()
         .filter(element ->
             StringUtils.hasText(element.getImageUrl()) && !MenuHelper.isUrl(element.getImageUrl()))
-        .forEach(element -> ofNullable(s3.getUrl(menuBucket, element.getImageUrl()).toString())
+        .forEach(element -> ofNullable(
+            s3.getUrl("%s/%s".formatted(menuBucket, menuBucketPath), element.getImageUrl())
+                .toString())
             .ifPresent(url -> {
               log.info("Set image url: {}, element: {}", url, element.getName());
               element.setImageUrl(url);
