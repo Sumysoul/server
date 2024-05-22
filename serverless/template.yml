@@ -25,7 +25,7 @@ Resources:
           Value: ${env:APP_NAME}
         - Key: STAGE
           Value: ${sls:stage}
-#  S3 bucket policy for reading menu json
+#  S3 bucket policy for reading menu json's and images
   MenuS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
