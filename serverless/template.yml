@@ -81,7 +81,6 @@ Resources:
           Value: ${env:APP_NAME}
         - Key: STAGE
           Value: ${sls:stage}
-
 #  DNS record for static website
   DnsRecord:
     Type: AWS::Route53::RecordSet
